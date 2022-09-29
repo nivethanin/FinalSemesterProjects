@@ -1,12 +1,9 @@
+
+
 class Puzzle:
 
-    b = [   
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ]
-
+    board = [0][0]
+    Size = len
 
     def isSafe(board, row, col):
     
@@ -16,9 +13,9 @@ class Puzzle:
                 return False
 
         # Check if column is valid
-        for j in range(row):
-            if board[j][col] == 1:
-                return False
+        # for j in range(row):
+        #     if board[j][col] == 1:
+        #         return False
         
         # Check if left diagonal is valid
         for i, j in zip(range(row,-1, -1), range(col,-1,-1)):
@@ -48,23 +45,43 @@ class Puzzle:
             print()
 
 
-    def findASafePlace(board, row):     
-        if row == len(board):
-            board.displayBoard(board)
+    def findASafePlace(board, col):     
+        if col>= len(board):
+            Puzzle.displayBoard(board)
+            return True
+
 
         for i in range(len(board)):
-            if board.isSafe(board, row, i):
-                board.placeQueen(board, row, i)
+            if Puzzle.isSafe(board, i, col):
+                Puzzle.placeQueen(board, i, col)
 
-                board.findASafePlace(board, row+1)
+                if Puzzle.findASafePlace(board, col+1)==True:
+                    return True
 
-                board.removeQueen(board, row, i)
-            
+                Puzzle.removeQueen(board, i, col)
+        
+        return False
 
 
-N = input("What is the size of the board?")
 
-createdBoard=[[ [0] * N for i in range(N)]]
+
+N = int(input("What is the size of the board?"))
+a = []
+b = []
+
+for j in range(0, N):
+        b.append(0)
+
+for i in range(0, N):
+    a.append(b)
+
+createdBoard=a
+
 solution = Puzzle()
-solution.displayBoard(createdBoard)
+solution.board = createdBoard
+
+Puzzle.displayBoard(createdBoard)
+solution.findASafePlace(0)
+if solution.findASafePlace(solution.board,0)==False:
+    print("No solution possible")
 
