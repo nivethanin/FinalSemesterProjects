@@ -61,6 +61,7 @@ class Puzzle:
 
 
 
+
 N = int(input("What is the size of the board?"))
 a = []
 b = []
