@@ -1,84 +1,95 @@
-from tkinter.tix import COLUMN
-
-
 class Puzzle:
 
     def __init__ (self, size):
+        '''Initializes the class and size of board and calls the solver function'''
         self.size = size
-        self.solve()
 
-    def solve(self):
-        positions = [-1] * self.size
-        self.findASafePlace(positions,0)
+        self.solver()
+
+    def solver(self):
+        '''Creates empty solution array and ca```               ````````````````````````````                lls '''
+        solutionArr = [0] * self.size
+        self.findASafePlace(solutionArr,0)
 
 
-    def findASafePlace(self, positions, target_row):     
+    def findASafePlace(self, solutionArr, target_row):     
         if target_row == self.size:
-            self.displayBoard(positions)
-
-            # self.solutions +=1
+            print(solutionArr)
+            self.displayBoard(solutionArr)
+            # self.printBoard(
+            self.createBoard(solutionArr)
+                # )
         
         else:
             for col in range(self.size):
+                if self.isSafe(solutionArr,target_row, col):
+                    solutionArr[target_row] = col
+                    self.findASafePlace(solutionArr, target_row + 1)
 
-                if self.check_place(positions,target_row, col):
-                    positions[target_row] = col
-                    self.findASafePlace(positions, target_row + 1)
 
-
-    def isSafe(self, positions, occupied_rows, col):
+    def isSafe(self, solutionArr, occupied_rows, col):
     
         for i in range(occupied_rows):
-            if positions[i] == col or \
-              positions[i] - i == col - occupied_rows or \
-                positions[i] + i == col + occupied_rows:
-
+            if solutionArr[i] == col or \
+              solutionArr[i] - i == col - occupied_rows or \
+                solutionArr[i] + i == col + occupied_rows:
                 return False
         return True
 
 
-    def placeQueen(board, i, j):
+    def placeQueen(self, board, i, j):
         board[i][j]=1
 
 
-    def removeQueen(board, i, j):
+    def removeQueen(self, board, i, j):
         board[i][j]=0
 
 
-    def displayBoard(self, positions):
+    def displayBoard(self, solutionArr):
+        
         for row in range(self.size):
             line = ""
-            for column in range(self.size):
-                if positions[row] == column:
-                    line += "Q "
+            for col in range(self.size):
+                if solutionArr[row] == col:
+                    line += "1 "
                 else:
-                    line += ". "
+                    line += "0 "
             print(line)
+
         print("\n")
 
 
+    def createBoard(self, solutionArr):
+        board = []
+        b = []
+
+        for _ in range(self.size):
+            b.append(0)
+
+        for _ in range(self.size):
+            board.append(b)
+
+        for row in range(self.size):
+            for col in range(self.size):
+                if solutionArr[row] == col:
+                    board[col][row] = 1
+                else:
+                    board[col][row] = 0
+        
+        # return board
+        print(board)
 
 
+    def printBoard(self, board):
+        for i in range(self.size):
+            for j in range(self.size):
+                print(board[i][j], end = ' ')
+            print()
 
 
+    def main():
+        N = int(input("What is the size of the board?"))
+        Puzzle(N)
 
-N = int(input("What is the size of the board?"))
-a = []
-b = []
 
-for j in range(0, N):
-        b.append(0)
-
-for i in range(0, N):
-    a.append(b)
-
-createdBoard=a
-
-solution = Puzzle()
-solution.board = createdBoard
-
-Puzzle.displayBoard(createdBoard)
-solution.findASafePlace(0)
-if solution.findASafePlace(solution.board,0)==False:
-    print("No solution possible")
-
+Puzzle.main()
