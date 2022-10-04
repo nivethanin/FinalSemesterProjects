@@ -10,6 +10,9 @@ with open('input.txt','r') as wholeText:
         #Separated the cities
         
         connectedCities = cityNode[1].split(' ')
+        #Creates the different
+
+
 
 
         print(connectedCities)
