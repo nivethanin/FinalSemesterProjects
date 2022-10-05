@@ -7,33 +7,37 @@ class Puzzle:
         self.solver()
 
     def solver(self):
-        '''Creates empty solution array and ca```               ````````````````````````````                lls '''
+        '''Creates empty solution array and calls find safe function'''
         solutionArr = [0] * self.size
         self.findASafePlace(solutionArr,0)
 
 
-    def findASafePlace(self, solutionArr, target_row):     
-        if target_row == self.size:
+    def findASafePlace(self, solutionArr, currentRow):
+        '''Recursive function that gets called each time a valid queen position is found
+        and base case is when the queen on the final row is found, then prints the board'''     
+        if currentRow == self.size:
             print(solutionArr)
-            self.displayBoard(solutionArr)
-            # self.printBoard(
-            self.createBoard(solutionArr)
-                # )
+            self.displayBoard(self.createBoard(solutionArr))
         
         else:
             for col in range(self.size):
-                if self.isSafe(solutionArr,target_row, col):
-                    solutionArr[target_row] = col
-                    self.findASafePlace(solutionArr, target_row + 1)
+                if self.isSafe(solutionArr,currentRow, col):
+                    # iterates through each column and adds it to the solution array
+                    # which is just a reference array with the coordinates for the solved boards
+                    solutionArr[currentRow] = col
+                    self.findASafePlace(solutionArr, currentRow + 1)
 
 
-    def isSafe(self, solutionArr, occupied_rows, col):
-    
-        for i in range(occupied_rows):
+    def isSafe(self, solutionArr, completedRows, col):
+        ''' Checks the position to see if there's any queens diagonals or on the same column'''
+        for i in range(completedRows):
             if solutionArr[i] == col or \
-              solutionArr[i] - i == col - occupied_rows or \
-                solutionArr[i] + i == col + occupied_rows:
+              solutionArr[i] - i == col - completedRows or \
+                solutionArr[i] + i == col + completedRows:
                 return False
+            #first line checks if there's a queen in the same colum
+            #second line checks if theres a queen left up diagonal 
+            #third line checks if theres a queen on the right up diagonal
         return True
 
 
@@ -45,42 +49,21 @@ class Puzzle:
         board[i][j]=0
 
 
-    def displayBoard(self, solutionArr):
-        
-        for row in range(self.size):
-            line = ""
-            for col in range(self.size):
-                if solutionArr[row] == col:
-                    line += "1 "
-                else:
-                    line += "0 "
-            print(line)
-
-        print("\n")
-
-
     def createBoard(self, solutionArr):
-        board = []
-        b = []
-
-        for _ in range(self.size):
-            b.append(0)
-
-        for _ in range(self.size):
-            board.append(b)
+        board =  [[0 for c in range(self.size)] for r in range(self.size)]
 
         for row in range(self.size):
             for col in range(self.size):
                 if solutionArr[row] == col:
-                    board[col][row] = 1
+                    self.placeQueen(board,row,col)
                 else:
-                    board[col][row] = 0
+                    self.removeQueen(board,row,col)
+           
+        return board
         
-        # return board
-        print(board)
 
 
-    def printBoard(self, board):
+    def displayBoard(self, board):
         for i in range(self.size):
             for j in range(self.size):
                 print(board[i][j], end = ' ')
