@@ -40,8 +40,6 @@ with open('input.txt','r') as wholeText:
         print(mainGraph)
 
 
-
-
 ''' 
 I could create an recursive function that keeps track of 
 the distance of the path it is currently on. I will have
