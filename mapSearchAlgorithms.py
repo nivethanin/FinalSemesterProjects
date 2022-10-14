@@ -37,7 +37,7 @@ with open('input.txt','r') as wholeText:
         
         mainGraph|=conCitiesDictionary
 
-        print(mainGraph)
+    print(mainGraph)
 
 
 ''' 
@@ -68,4 +68,21 @@ def breadthFirstSearch(visited, graph, node):
         queue.append(neighbour)
 
 
-breadthFirstSearch(visited, mainGraph, 'Craiova') 
+# breadthFirstSearch(visited, mainGraph, 'Craiova') 
+
+def bdfs (graph, visited, currNode, goal):
+  if currNode not in visited:
+    visited.append(currNode)
+
+  for node,value in graph[currNode]:
+    queue.append(node)
+    if node == goal:
+      print(queue)
+      return
+  
+    bdfs(graph, visited, node, goal)
+
+
+bdfs(mainGraph, visited, 'Craiova', 'Bucharest')
+
+
