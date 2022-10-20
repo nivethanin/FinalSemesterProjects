@@ -38,93 +38,22 @@ with open('input.txt','r') as wholeText:
         conCitiesDictionary = {city:miniDic}
         
         mainGraph|=conCitiesDictionary
-
-    print(mainGraph)
-
-
-''' 
-I could create an recursive function that keeps track of 
-the distance of the path it is currently on. I will have
-store:
-- path
-- weight of path
-That way I can have a check in the recursive function to
-see which recursive call has the lowest weight and
-shortest path
-'''
-
-# visited = [] # List to keep track of visited nodes.
-# queue = []   # Initialize a queue
-
-# def breadthFirstSearch(visited, graph, node, goal):
-#   # if node in visited:
-#   #   return
-
-#   if node == goal and node in visited:
-#     print ("this is visited: " , visited)
-#     print ("this is queue: ", queue)
-#     return
-
-#   else:
-#     if node not in visited:
-#       visited.append(node)
-      
-#       queue.append(node)
-
-#     while queue:
-#       s = queue.pop(0) 
-#     # print (s, end = " ") 
-
-#       for neighbour, key in graph[s].items():
-#         if neighbour not in visited:
-#           visited.append(neighbour)
-#           queue.append(neighbour)
-
-#         breadthFirstSearch(visited, mainGraph, s, goal)
-
-# breadthFirstSearch(visited, mainGraph, "Craiova", "Bucharest")
-
-'''  another try   '''
-# breadthFirstSearch(visited, mainGraph, 'Craiova') 
-
-# def bdfs (graph, visited, currNode, goal):
-#   if currNode not in visited:
-#     visited.append(currNode)
-#     print(visited)
-
-#   for node,value in graph[currNode].items():
-#     if node in visited:
-#       return
-      
-#     queue.append(node)
-#     # print("made it to loop")
-#     if currNode == goal:
-#       print(queue)
-#       return
     
-#     bdfs(graph, visited, node, goal)
-
-#   print("finished a recursion call")
-  
-  
-
- 
-# bdfs(mainGraph, visited, 'Craiova', 'Bucharest')
+    print("\n\n DATA LOADING")
+    print("Start State: " + str(currLocation) + "\nEnd State(s): " + str(destination))
+    
 
 
-# for key, value in mainGraph['Arad'].items():
-#   print(key, value)
 
-''' Another try'''
-
-def shortest_path(graph, node1, node2):
+def bfs(graph, node1, goal):
+  ''' Breadth-First Search'''
   path_list = [[node1]]
   path_index = 0
   # To keep track of previously visited nodes
   previous_nodes = {node1}
-  if node1 == node2:
+  if node1 == goal:
       print(previous_nodes)
-      return path_list[0]
+      print( path_list[0])
       
   while path_index < len(path_list):
     current_path = path_list[path_index]
@@ -132,10 +61,10 @@ def shortest_path(graph, node1, node2):
     next_nodes = graph[last_node]
 
     # Search goal node
-    if node2 in next_nodes:
-      current_path.append(node2)
+    if goal in next_nodes:
+      current_path.append(goal)
+      print("\nBREADTH FIRST SEARCH")
       print("States visted: ", previous_nodes)
-
       print("Found path of length: ", path_index)
       f = True
       for city in current_path:
@@ -159,77 +88,46 @@ def shortest_path(graph, node1, node2):
   # No path is found
   return []
 
-print(shortest_path(mainGraph, "Craiova", "Bucharest"))
+
+bfs(mainGraph, "Craiova", "Bucharest")
 
 
 
-''' UCS '''
-# def UCS(graph, src, dest):
-#     minDistances, predecessor = dijkstra(graph, src)
-    
-#     path = []
-#     currentNode = dest
-#     while currentNode != src:
-#         if currentNode not in predecessor:
-#             print("Path not reachable")
-#             break
-#         else:
-#             path.insert(0, currentNode)
-#             currentNode = predecessor[currentNode]
-#     path.insert(0, src)
-    
-#     if dest in minDistances and minDistances[dest] != float("inf"):
-#         print('Shortest distance is ' + str(minDistances[dest]))
-#         print('And the path is ' + str(path))
-        
-# UCS(mainGraph, 'a', 'd')
 
 def UCS(graph, start, goal):
-  global cost
-  answer = []
-  queue = PriorityQueue()
+  ''' Uniform Cost Search '''
+  pq = PriorityQueue()
+  pq.put((0, [start]))
+  visitedStates = []
+  visitedStates.append(start)
 
+  while not pq.empty():
+      node = pq.get()
+      current = node[1][len(node[1]) - 1]
 
-  for i in range(len(goal)):
-    answer.append(10**20)
+      if goal in node[1]:
+          print("\n\n UNIFORM COST SEARCH")
+          print("States Vvisited: " + str(visitedStates))
+          print("Found path of length: " + str(node[1]) + " with a total cost of " + str(node[0]) +"\n\n")
+          
+          f = True
+          for city in node[1]:
+            if f:
+              f = False
+              print(city, end =" ")
+            else:
+              print('=> ' + city, end = " ")
+          return ""
+          break
 
-  queue.put(0, start)
+      cost = node[0]
+      for neighbor in graph[current]:
+          temp = node[1][:]
+          temp.append(neighbor)
+          if neighbor not in visitedStates:
+            visitedStates.append(neighbor)
 
-  visited = {}
-
-  count = 0
-
-  while (len(queue)> 0):
-    queue = sorted(queue)
-    p = [-1]
-
-    del queue[-1]
-
-    p[0] *=-1
-
-    if p[1] in goal:
-      index = goal.index(p[1])
-
-      if(answer[index] == 10**20):
-        count +=1 
-      
-      if(answer[index]>p[0]):
-        answer[index]=p[0]
-
-      del queue[-1]
-
-      queue = sorted(queue)
-      if (count == len(goal)):
-        return answer
-
-      
-    if p[1] not in visited:
-      for i in range(len(graph[p[1]])):
-        queue.append([(p[0] + cost[(p[1], graph[p[1]][i])])* -1, graph[p[1]][i]])
-    
-    visited[p[1]] = 1
-
-  return answer
+          pq.put((cost + graph[current][neighbor], temp))
 
 
 UCS(mainGraph, "Craiova", "Bucharest")
