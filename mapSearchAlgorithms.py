@@ -10,6 +10,7 @@ with open('input.txt','r') as wholeText:
     destination = lines[2]
 
     mainGraph = {}
+    transitions = 0
 
     for lineNum in range(3,len(lines)):
 
@@ -18,29 +19,35 @@ with open('input.txt','r') as wholeText:
         #Separated the cities
         
         connectedCities = cityNode[1].split(' ')
+        transitions += len(connectedCities)
         #Creates an array of the connected cities
 
         del connectedCities[0]
         #Deletes first empty item in each connected cities array
 
-        
-        miniDic ={}
+        miniDic ={}                                                                                                                                                                                                            
 
         for conCity in range(len(connectedCities)):
             
             conCitiesWithDistance = connectedCities[conCity].split(',')
 
             conCityDictionary ={conCitiesWithDistance[0]:int(conCitiesWithDistance[1])}
-            
-            miniDic |= conCityDictionary
-            
+            #Splits connected cities into the city and the distance
 
+            miniDic |= conCityDictionary
+            #Stores just connected cities in a dictionary
+
+            
         conCitiesDictionary = {city:miniDic}
+        #Connects the cities to the dictionary of connected cities
         
         mainGraph|=conCitiesDictionary
+        #Connects all the dictionaries into one
     
     print("\n\n DATA LOADING")
-    print("Start State: " + str(currLocation) + "\nEnd State(s): " + str(destination))
+    print("Start State: " + str(currLocation) + "End State(s): " + str(destination), end =" ")
+    print("State Space Size: " + str(len(mainGraph)))
+    print("Total Transitions: " + str(transitions))
     
 
 
@@ -48,26 +55,28 @@ with open('input.txt','r') as wholeText:
 def bfs(graph, node1, goal):
   ''' Breadth-First Search'''
   path_list = [[node1]]
-  path_index = 0
-  # To keep track of previously visited nodes
-  previous_nodes = {node1}
+  pathCount = 0
+
+  visitedNodes = {node1}  
+  # To keep track of visited nodes
+
   if node1 == goal:
-      print(previous_nodes)
+      print(visitedNodes)
       print( path_list[0])
       
-  while path_index < len(path_list):
-    current_path = path_list[path_index]
-    last_node = current_path[-1]
+  while pathCount < len(path_list):
+    currPath = path_list[pathCount]
+    last_node = currPath[-1]
     next_nodes = graph[last_node]
 
     # Search goal node
     if goal in next_nodes:
-      current_path.append(goal)
+      currPath.append(goal)
       print("\nBREADTH FIRST SEARCH")
-      print("States visted: ", previous_nodes)
-      print("Found path of length: ", path_index)
+      print("States visted: ", visitedNodes)
+      print("Found path of length: ", pathCount)
       f = True
-      for city in current_path:
+      for city in currPath:
         if f:
           f = False
           print(city, end =" ")
@@ -77,20 +86,20 @@ def bfs(graph, node1, goal):
 
     # Add new paths
     for next_node in next_nodes:
-        if not next_node in previous_nodes:
-            new_path = current_path[:]
+        if not next_node in visitedNodes:
+            new_path = currPath[:]
             new_path.append(next_node)
             path_list.append(new_path)
-            # To avoid backtracking
-            previous_nodes.add(next_node)
+            
+            visitedNodes.add(next_node)
+            # Keep track of visited nodes
     # Continue to next path in list
-    path_index += 1
-  # No path is found
-  return []
-
+    pathCount += 1
+  
+  return ""
+  # Returns empty string if no solution is found
 
 bfs(mainGraph, "Craiova", "Bucharest")
-
 
 
 
@@ -110,6 +119,7 @@ def UCS(graph, start, goal):
           print("States Vvisited: " + str(visitedStates))
           print("Found path of length: " + str(node[1]) + " with a total cost of " + str(node[0]) +"\n\n")
           
+
           f = True
           for city in node[1]:
             if f:
@@ -117,17 +127,19 @@ def UCS(graph, start, goal):
               print(city, end =" ")
             else:
               print('=> ' + city, end = " ")
+          #Prints the cities with arrows
           return ""
-          break
+          #Returns empty if goal isn't found
 
       cost = node[0]
-      for neighbor in graph[current]:
+      for nextNode in graph[current]:
           temp = node[1][:]
-          temp.append(neighbor)
-          if neighbor not in visitedStates:
-            visitedStates.append(neighbor)
+          temp.append(nextNode)
+          if nextNode not in visitedStates:
+            visitedStates.append(nextNode)
 
-          pq.put((cost + graph[current][neighbor], temp))
+          pq.put((cost + graph[current][nextNode], temp))
+          #Adds cost as the priority metric and the node in the queue
 
 
 UCS(mainGraph, "Craiova", "Bucharest")
