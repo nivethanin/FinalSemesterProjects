@@ -19,11 +19,12 @@ with open('input.txt','r') as wholeText:
         #Separated the cities
         
         connectedCities = cityNode[1].split(' ')
-        transitions += len(connectedCities)
         #Creates an array of the connected cities
 
         del connectedCities[0]
         #Deletes first empty item in each connected cities array
+        
+        transitions += len(connectedCities)
 
         miniDic ={}                                                                                                                                                                                                            
 
@@ -48,7 +49,6 @@ with open('input.txt','r') as wholeText:
     print("Start State: " + str(currLocation) + "End State(s): " + str(destination), end =" ")
     print("State Space Size: " + str(len(mainGraph)))
     print("Total Transitions: " + str(transitions))
-    
 
 
 
