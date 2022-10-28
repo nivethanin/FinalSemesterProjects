@@ -1,0 +1,242 @@
+Midterm – Overview
+
+
+
+
+Lecture 01
+
+Know what an Operating System is
+
+Know what the components of a computer system are
+
+Know what an OS does
+
+Know what when an OS is working as a resource allocator vs control program
+
+Know what an interrupt is, and its use, how to handle interrupts
+
+Know what caching is
+
+Know about the storage device hierarchy
+
+Know what DMA is
+
+Know about the symmetric multiprocessing architecture
+
+Know about user mode vs kernel mode and transitioning between the two
+
+Know about protection and security in the context of an OS
+
+Know that kernels utilize different data structures
+
+Know the difference between client-server and peer-to-peer models
+
+Be able to describe the cloud computing environment
+
+Know what real time systems are and when they are used
+
+Know what an open source vs closed source operating system is
+
+
+Lecture 2
+
+
+Know about the different operating system services
+
+Know about the OS functions the ensure efficient operation
+
+Know what a CLI is
+
+Know what a System Call is
+
+Know what an API is
+
+Know about / how system calls pass parameters (pushed, popped)
+
+Know the categories of system calls, but you dont necessarily have to memorize each and every one
+
+Know what system programs are
+
+Know background services vs application programs
+
+Be able to explain user goals vs system goals
+
+Be able to explain the different operating system structures, and how they differ.
+
+Don’t worry about mobile architectures.
+
+Know about and be able to explain OS debugging
+
+Be able to explain how an operating system boots.
+
+
+Lecture 3
+
+
+Know and be able to explain what a process is
+
+Know the difference between a process and a program
+
+Know the process states, and how it transfers between them
+
+Be able to explain why we use process scheduling
+
+Be able to explain short term and long term schedulers
+
+    What does io bound vs cpu bound mean?
+
+Know what context switching is, what its benefits and drawbacks are
+
+Be able to explain what forking is in the context of processes
+
+Be able to explain how to terminate a process
+
+Explain what a zombie process is
+
+
+Lecture 4
+
+Be able to explain what IPC is and the two models of IPC
+
+Know the difference between cooperating and independent processes
+
+Know what a bounded vs unbounded buffer is
+
+Know and be able to explain the producer consumer problem
+
+Know what synchronization means in the context of interprocess communication / shared memory
+
+Know message passing
+
+    Physical vs logical message passing
+
+    Direct vs indirect communication
+
+    Be able to explain the concept of a “mailbox”
+
+    Know and be able to explain synchronization that is blocking or non-blocking
+
+    Be able to explain the rendezvous problem
+
+    Explain what message buffering is
+
+Know and be able to explain what pipes are
+
+    Ordinary pipes vs named pipes
+
+
+Lecture 5
+
+Be able to explain what a thread is
+
+Explain what the benefits of multithreaded are
+
+Explain the difference between parallelism vs concurrency
+
+    Be able to explain data parallelism vs task parallelism
+
+Be able to calculate speedup using amdahl’s law
+
+Know what amdahl’s law is
+
+Know the difference between user threads and kernel threads
+
+Know and be able to explain the multithreading models
+
+Know what implicit threading is
+
+Know and be able to explain what thread pools are and how they are used
+
+Be able to explain some issues that arise when threading
+
+    Some systems have fork vs exec
+
+    What signals are and how they are used
+
+    What thread cancellation is and why its used
+
+    Define- upcalls
+
+
+Lecture 6
+
+Explain / define CPU burst vs I/O burst
+
+Explain characteristics of CPU burst (short v long)
+
+Explain what the CPU scheduler is, what it does
+
+Define preemption
+
+    Know the diference between nonpreemption and preemption
+
+    Know that this can lead to race conditions
+
+Know what a dispatcher does
+
+    Define dispatch latency
+
+Know the different scheduling criteria
+
+Know some of the schedule algorithm optimization criteria
+
+Know/explain what FCFS scheduling is
+
+    Explain the convoy effect
+
+Know what SJF scheduling is
+
+Know how to determine the length of the next CPU burst is calculated
+
+    And that it uses an exponential weighted moving average
+
+Know what shortest remaining time first scheduling is
+
+Know what round robin scheduling is
+
+    Know what a time quantum is
+
+Know what priority scheduling is
+
+    Starvation vs aging
+
+Know how multilevel queues work
+
+If given an example be able to explain how one works
+
+Know what thread scheduling is
+
+Know about multiprocessor scheduling
+
+Know what SMP is
+
+Explain memory stall
+
+Explain how multithreaded can overcome memory stall
+
+Know what chip-multithreading / hyperthreading is
+
+Know what a numa node is
+
+Explain processor affinity
+
+    Hard v soft
+
+Explain interrupt latency vs dispatch latency
+
+Different scheduling:
+
+    Priority based
+
+    Rate monotonic scheduling
+
+    Missed deadlines with rare monotonic
+
+    earliest deadline first
+
+    Proportional share
+
+Know how to use Little’s formula
+
+Know what simulations are in the context of scheduling, why they are used, benefits and drawbacks
+
