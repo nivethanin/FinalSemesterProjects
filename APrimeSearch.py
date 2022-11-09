@@ -3,12 +3,14 @@ from collections import deque
 
 mainGraph = {}
 heuristicGraph = {}
+#holds global dictionaries for the heuristics chart and neighbouring cities and distance chart
 
 start = []
 goal = []
 #Stored these as strings for reusability and couldn't store strings for some reason
 
 def dataLoader(filename, mainGraph, start, goal):
+    #Same dataloader from Assignment 2
     with open(filename,'r') as wholeText:
         lines = wholeText.readlines()
 
@@ -22,7 +24,7 @@ def dataLoader(filename, mainGraph, start, goal):
 
             cityNode = lines[lineNum].split(':')
             city = cityNode[0] 
-            #Separated the cities
+            #SenMapated the cities
 
             connectedCities = cityNode[1].split(' ')
             #Creates an array of the connected cities
@@ -58,6 +60,7 @@ def dataLoader(filename, mainGraph, start, goal):
 
 
 def heuristicLoader(fileName, heuristicGraph):
+    #loads the heuristic information into a readable dictionary
     with open(fileName, 'r') as wholeText:
         lines = wholeText.readlines()
 
@@ -67,6 +70,7 @@ def heuristicLoader(fileName, heuristicGraph):
             cityNode[1] = int(cityNode[1][1:].replace('\n', ''))
 
             heuristicGraph |= {cityNode[0]: cityNode[1]}
+            #stores it in the global heuristicGraph dictionary
 
 
 class AStarSearchClass:
@@ -77,37 +81,32 @@ class AStarSearchClass:
     def get_neighbors(self, v):
         return self.mainGraph[v]
 
-    # This is heuristic function which is having equal values for all nodes
-    def h(self, n):
+    def heur(self, n):
+        #Function used to return the huristic value for nodes
         return self.heuristicGraph[n]
 
     def aStarSearch(self, start, goal):
-        # In this open_lst is a lisy of nodes which have been visited, but who's 
-        # neighbours haven't all been always inspected, It starts off with the start 
-        #node
-        # And closed_lst is a list of nodes which have been visited
-        # and who's neighbors have been always inspected
-        open_lst = set([start])
-        closed_lst = set([])
+
+        openArr = set([start])
+        closedArr = set([])
         testCost =[]
 
-        # poo has present distances from start to all other nodes
-        # the default value is +infinity
-        poo = {}
-        poo[start] = 0
+        # dMap holds distances from the start
+        dMap = {}
+        dMap[start] = 0
 
-        # par contains an adjac mapping of all nodes
-        par = {}
-        par[start] = start
+        # nMap holds the nieghbouring nodes
+        nMap = {}
+        nMap[start] = start
 
-        while len(open_lst) > 0:
+        while len(openArr) > 0:
             n = None
 
             # it will find a node with the lowest value of f() -
-            for v in open_lst:
-                if n == None or poo[v] + self.h(v) < poo[n] + self.h(n):
+            for v in openArr:
+                if n == None or dMap[v] + self.heur(v) < dMap[n] + self.heur(n):
                     n = v
-                    testCost.append(poo[v])
+                    testCost.append(dMap[v])
                     
 
             if n == None:
@@ -119,16 +118,16 @@ class AStarSearchClass:
             if n == goal:
                 finalPath = []
  
-                while par[n] != n:
+                while nMap[n] != n:
                     finalPath.append(n)
-                    n = par[n]
+                    n = nMap[n]
  
                 finalPath.append(start)
                 finalPath.reverse()
 
                 print("\nA* SEARCH")
-                print('States Visited:', poo.keys())
-                print("Total cost:", poo[goal] )
+                print('States Visited:', dMap.keys())
+                print("Total cost:", dMap[goal] )
                 f = True
                 for city in finalPath:
                     if f:
@@ -143,36 +142,34 @@ class AStarSearchClass:
  
             # for all the neighbors of the current node do
             for m, weight in self.get_neighbors(n).items():
-              # if the current node is not presentin both open_lst and closed_lst
-                # add it to open_lst and note n as it's par
-                if m not in open_lst and m not in closed_lst:
-                    open_lst.add(m)
-                    par[m] = n
-                    poo[m] = poo[n] + weight
+              # if the current node is not in  openArr and closedArr we add it to openArr and note n as it's nMap
+                if m not in openArr and m not in closedArr:
+                    openArr.add(m)
+                    nMap[m] = n
+                    dMap[m] = dMap[n] + weight
                     # testCost.append(weight)
 
-                # otherwise, check if it's quicker to first visit n, then m
-                # and if it is, update par data and poo data
-                # and if the node was in the closed_lst, move it to open_lst
+                # otherwise, check if it's quicker to first visit neighbour, then m the current node
                 else:
-                    if poo[m] > poo[n] + weight:
-                        poo[m] = poo[n] + weight
-                        par[m] = n
+                    if dMap[m] > dMap[n] + weight:
+                        dMap[m] = dMap[n] + weight
+                        nMap[m] = n
 
-                        if m in closed_lst:
-                            closed_lst.remove(m)
-                            open_lst.add(m)
+                        if m in closedArr:
+                            closedArr.remove(m)
+                            openArr.add(m)
 
-            # remove n from the open_lst, and add it to closed_lst
-            # because all of his neighbors were inspected
-            open_lst.remove(n)
-            closed_lst.add(n)
+            # remove neighbour node from the openArr and add it to closedArr since all neighbours were checked
+            openArr.remove(n)
+            closedArr.add(n)
  
-        print('Path does not exist!')
+        print('No path exists, sorry')
         return None
 
 
 def main():
+    #I tried to make the code more reusable so I implemented a main function
+    #which will work by just hardcoding the file names
     dataLoader("input.txt", mainGraph, start, goal)
     heuristicLoader("input_heuristic(1).txt", heuristicGraph)
 
