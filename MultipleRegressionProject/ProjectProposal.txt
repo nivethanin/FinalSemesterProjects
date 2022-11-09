@@ -1,0 +1,17 @@
+Proposal: Multiple Regression Analysis to Predict Number of Season Wins for NBA Teams Using Python
+
+Details: The goal of the project would be to upload and parse through historic NBA data into database, and then use a python library to assist with a multiple regression analysis to estimate the number of wins they will have for the rest of the 2022-2023 NBA Season.
+Currently, the libraries I'm considering are listed below. 
+I will also conduct an analysis on the accuracy of the regression analysis based predictions. 
+I will be using the traditional stats such as team rebounds, assists, points, steals, blocks, turnovers, etc.
+
+
+Libraries:
+Pandas
+Numpy
+matplotlib.pyplot
+seaborn
+sklearn
+
+Resources:
+https://www.geeksforgeeks.org/multiple-linear-regression-with-scikit-learn/?ref=rp
