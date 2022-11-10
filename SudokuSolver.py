@@ -97,7 +97,7 @@ class SudokuSolver:
     
 
 def main():
-    gg, size = GridMaker.gridMaker('sudoku9TB.txt')
+    gg, size = GridMaker.gridMaker('sudoku9TB2.txt')
     s = SudokuSolver(gg, size)
     s.solve()
 
