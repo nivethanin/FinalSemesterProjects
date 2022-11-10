@@ -1,127 +1,105 @@
 class GridMaker:
+    '''Class to parse through the file and create the two dimensional array'''
     def gridMaker(gridFileName):
         grid = []
-        m = 0
+        S = 0
+        #m is the size of the grid, was included separately in the text file
 
         with open(gridFileName,'r') as f:
             lines = f.readlines()
-            M = int(lines[0])
+            S = int(lines[0])
+            #first line contains the size of the grid
 
             for i in range(1,len(lines)):
                 g = list(map(int, lines[i].split(' ')))
                 grid.append(g)
-                
-        return grid, m
+                #adds the individual integers from each line in an array to the larger 2D array
+            
+        return grid, S
+        #returns the 2D array and the size of the grid
 
 
 
 class SudokuSolver:   
-    def __init__(self, grid, M):
+    def __init__(self, grid, S):
+        ''' Initializes the class'''
         self.grid = grid
-        self.M = M
+        self.S = S
     
-    def puzzle(self):
-        for i in range(self.M):
-            for j in range(self.M):
+    def printBoard(self):
+        '''Prints the board'''
+        for i in range(self.S):
+            for j in range(self.S):
                 print(self.grid[i][j],end = " ")
             print()
             
-    def solve(self, row, col, num):
-        for x in range(self.M):
+    def validPlacement(self, row, col, num):
+        '''Checks to see if placement of a number is valid'''
+        for x in range(self.S):
             if self.grid[row][x] == num:
                 return False
-                
-        for x in range(self.M):
+                #Checks column if the 'num' number exists in it
+
+        for x in range(self.S):
             if self.grid[x][col] == num:
                 return False
+                #Checks column if the 'num' number exists in it
     
-        startRow = row - row % 3
-        startCol = col - col % 3
+        sectionRow = row - row % 3
+        sectionCol = col - col % 3
+        #Finds the top left coordinate of the 3x3 section that the placement is in
+
         for i in range(3):
             for j in range(3):
-                if self.grid[i + startRow][j + startCol] == num:
+                if self.grid[i + sectionRow][j + sectionCol] == num:
                     return False
+                    #Checks the placements 3x3 section already contains the 'num' number
+
         return True
+
+    def solve(self):
+        '''Calls the solver function'''
+        self.solver(0,0)
+        #Attempt to keep user code clean
     
-    def Suduko(self, row, col):
+    def solver(self, row, col):
+        '''Recursive function that checks potential numbers for a position then
+        makes recursive call for the next empty space (ignores existing numbers on the board)'''
     
-        if (row == self.M - 1 and col == self.M):
+        if (row == self.S - 1 and col == self.S):
+            self.printBoard()
             return True
-        if col == self.M:
+            #[Base case] if we get to final row and column then return true
+            #The column index is equal to the max size because the calls to this function
+            #increment the column
+
+        if col == self.S:
             row += 1
             col = 0
+            #Increment (go down one) row and reset column back to first column if column 
+            #index is past max number
+
         if self.grid[row][col] > 0:
-            return self.Suduko(row, col + 1)
-        for num in range(1, self.M + 1, 1): 
-        
-            if self.solve(row, col, num):
-            
+            return self.solver(row, col + 1)
+            #Skips existing numbers in the grid
+
+        for num in range(1, self.S + 1, 1): 
+            if self.validPlacement(row, col, num):
                 self.grid[row][col] = num
-                if self.Suduko(row, col + 1):
+                #If the placement is a valid position for the number, place it
+                if self.solver(row, col + 1):
                     return True
+                    #Call the solve function on the next position
             self.grid[row][col] = 0
+            #If valid placement isn't found set to zero
         return False
+        #If no valid placements are found, return false
     
 
-gg, size = GridMaker.gridMaker('sudoku9TB.txt')
-grid = [[0, 0, 3, 0, 2, 0, 6, 0, 0], [9, 0, 0, 3, 0, 5, 0, 0, 1], [0, 0, 1, 8, 0, 6, 4, 0, 0], [0, 0, 8, 1, 0, 2, 9, 0, 0], [7, 0, 0, 0, 0, 0, 0, 0, 8], [0, 0, 6, 7, 0, 8, 2, 0, 0], [0, 0, 2, 6, 0, 9, 5, 0, 0], [8, 0, 0, 2, 0, 3, 0, 0, 9], [0, 0, 5, 0, 1, 0, 3, 0, 0]]
-s = SudokuSolver(grid, size)
+def main():
+    gg, size = GridMaker.gridMaker('sudoku9TB.txt')
+    s = SudokuSolver(gg, size)
+    s.solve()
 
-# print(gg)
-
-if (s.Suduko(0, 0)):
-    s.puzzle()
-else:
-    print("No Solution!!!!")
-
-
-M = 9
-def puzzle(a):
-    for i in range(M):
-        for j in range(M):
-            print(a[i][j],end = " ")
-        print()
-def solve(grid, row, col, num):
-    for x in range(9):
-        if grid[row][x] == num:
-            return False
-             
-    for x in range(9):
-        if grid[x][col] == num:
-            return False
- 
- 
-    startRow = row - row % 3
-    startCol = col - col % 3
-    for i in range(3):
-        for j in range(3):
-            if grid[i + startRow][j + startCol] == num:
-                return False
-    return True
- 
-def Suduko(grid, row, col):
- 
-    if (row == M - 1 and col == M):
-        return True
-    if col == M:
-        row += 1
-        col = 0
-    if grid[row][col] > 0:
-        return Suduko(grid, row, col + 1)
-    for num in range(1, M + 1, 1): 
-     
-        if solve(grid, row, col, num):
-         
-            grid[row][col] = num
-            if Suduko(grid, row, col + 1):
-                return True
-        grid[row][col] = 0
-    return False
- 
-'''0 means the cells where no value is assigned'''
-grid = [[0, 0, 3, 0, 2, 0, 6, 0, 0], [9, 0, 0, 3, 0, 5, 0, 0, 1], [0, 0, 1, 8, 0, 6, 4, 0, 0], [0, 0, 8, 1, 0, 2, 9, 0, 0], [7, 0, 0, 0, 0, 0, 0, 0, 8], [0, 0, 6, 7, 0, 8, 2, 0, 0], [0, 0, 2, 6, 0, 9, 5, 0, 0], [8, 0, 0, 2, 0, 3, 0, 0, 9], [0, 0, 5, 0, 1, 0, 3, 0, 0]]
- 
-# if (Suduko(grid, 0, 0)):
-#     puzzle(grid)
-# else:
-#     print("Solution does not exist:(")
+if __name__ == "__main__":
+    main()
