@@ -12,6 +12,3 @@ Numpy
 matplotlib.pyplot
 seaborn
 sklearn
-
-Resources:
-https://www.geeksforgeeks.org/multiple-linear-regression-with-scikit-learn/?ref=rp
