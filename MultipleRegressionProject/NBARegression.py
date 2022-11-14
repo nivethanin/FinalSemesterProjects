@@ -10,8 +10,8 @@ from sklearn import preprocessing
 df = pd.read_csv("MultipleRegressionProject\Real-estate1.csv")
 df.drop('No', inplace = True,axis=1)
 
-print(df.head())
-print(df.columns)
+# print(df.head())
+# print(df.columns)
 
 sns.scatterplot(x='X4 number of convenience stores',
                 y='Y house price of unit area', data=df)
@@ -39,4 +39,8 @@ print(
 print(
   'mean_absolute_error : ', mean_absolute_error(y_test, predictions))
 
-  
+# print(
+#   'mean predictions: ', predictions)
+
+
+dataRefUrl = 'https://www.nba.com/stats/teams/advanced?Season=2021-22&dir=A&sort=PACE'
