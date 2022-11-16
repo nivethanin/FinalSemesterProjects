@@ -18,26 +18,22 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
-from sklearn.feature_selection import f_regression
 
 
-df = pd.read_csv("MultipleRegressionProject\BallTeamStats.csv")
-df.drop( 'Rk' , inplace = True,axis=1)
-print(df.head())
+df = pd.read_csv("MultipleRegressionProject\Real-estate1.csv")
+df.drop('No', inplace = True,axis=1)
 
 # print(df.head())
 # print(df.columns)
 
-# sns.scatterplot(x='X4 number of convenience stores',
-#                 y='Y house price of unit area', data=df)
+sns.scatterplot(x='X4 number of convenience stores',
+                y='Y house price of unit area', data=df)
 
-# plt.show()
+plt.show()
 
 
-X = df[['Age', 'MOV', 'SOS', 'ORtg', 'DRtg', 'Pace',
- 'FTr', '3PAr', 'TS%', 'eFG%', 'TOV%', 'ORB%', 'FT/FGA',
-  'D_eFG%', 'D_TOV%', 'D_RB%', 'D_FT/FGA']]
-y = df['W']
+X = df.drop('Y house price of unit area',axis= 1)
+y = df['Y house price of unit area']
 print(X)
 print(y)
 
@@ -56,11 +52,11 @@ print(
 print(
   'mean_absolute_error : ', mean_absolute_error(y_test, predictions))
 print(
-  'mean ')
+  df.describe())
 
-ftest, _ = f_regression(X, y)
+# model.fit(X_train,y_train)
+# soloPredict = model.predict([[2013.333,6.3,90.45606,9,24.97433,121.5431]])
 
 
-# dataRefUrl = 'https://www.nba.com/stats/teams/advanced?Season=2021-22&dir=A&sort=PACE'
 
-#2004/2005 when there were 30 teams
+dataRefUrl = 'https://www.nba.com/stats/teams/advanced?Season=2021-22&dir=A&sort=PACE'
