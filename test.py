@@ -4,6 +4,8 @@ print(0.108+0.012+0.072+0.008)
 print(0.108+ 0.016+ 0.072+ 0.144)
 print(0.2+0.2-0.108-0.012)
 
-bbg = 0.124*(0.072+0.144+0.016+0.108)
-print(f"Bloody Test mate: {bbg}")
+bbg = (3/5 * 1/4* 2/5 * 1/2)
+bukake = 2/5* 3/4 * 3/5 * 1/2
+print(f"yes mate: {bbg}")
+print(f"no mate: {bukake}")
 print()

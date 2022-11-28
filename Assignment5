@@ -4,3 +4,27 @@ C) 0.342
 D) 0.2+0.2-0.108-0.012 = 0.28
 E) 
 F) 
+
+
+2. both have a pit = 0.05 * 0.05 = 0.0025
+only one has the pit = 0.0475
+neither have the pit = 0.9025
+
+
+3. 
+P(stolen=yes)= 1/2
+P(stolen=no)= 1/2
+P(red|stolen=yes)= 3/5
+P(red|stolen=no)= 2/5
+P(SUV|stolen=yes)= 1/4
+P(SUV|stolen=no)= 3/4
+P(domestic|stolen=yes) = 2/5
+P(domestic|stolen=no)= 3/5
+
+P(NO|red, SUV, domestic)= 2/5* 3/4 * 3/5 * 1/2 = 9/100
+P(YES|red, SUV, domestic) = 3/5 * 1/4* 2/5 * 1/2 = 3/100
+
+Odds of a domestic red SUV being stolen is 3/100
+
+
+
