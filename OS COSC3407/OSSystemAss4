@@ -1,0 +1,56 @@
+Assignment 4:
+Please complete the following questions. While you may use resources in the book and online, please explain in your own words, and do not simply copy and paste from the book, slides, or resources online. Please make sure to use your own words especially if it specifically says to do so. If you need to cite something, be sure to cite your source. Failure to cite sources will result in a 0 for the entire assignment. 
+Q1: Name and explain two differences between physical and logical addresses
+Q2: Assuming a 1-KB page size (recall 1 KB = 1024 B), what are the page numbers and offsets for the following address references (provided as decimal numbers):
+a. 3085
+b. 42095
+c. 215201
+d. 650000
+e. 2000001
+
+a. Page number is 3 and offset value is 13
+b. Page number is 41 and offset value is 111
+c. Page number is 210 and offset value is 161
+d. Page number is 634 and offset value is 784
+e. Page number is 1953 and offset value is 129
+
+Q3: Are two entries allowed to point to the same page frame in memory? If they are what is the effect of this? Explain how this effect could be used to decrease the amount of time needed to copy a large amount of memory from one place to another. What effect would updating some byte on one page have on the other page?
+Q4: Consider the following page reference string: 1, 2, 3, 4, 2, 1, 5, 6, 2, 1, 2, 3, 7, 6, 3, 2, 1, 2, 3, 6. 
+How many page faults would occur for the following replacement algorithms, assuming one, two, three, four, five, six, and seven frames?
+ Remember that all frames are initially empty, so your first unique pages will cost one fault each. 
+• LRU replacement 
+• FIFO replacement
+ • Optimal replacement
+Q5:  Consider the following page reference string: 7, 2, 3, 1, 2, 5, 3, 4, 6, 7, 7, 1, 0, 5, 4, 6, 2, 3, 0 , 1. Assuming demand paging with four frames, how many page faults would occur for the following replacement algorithms? 
+• LRU replacement 
+• FIFO replacement
+• Optimal replacement
+
+
+Q6: Explain what thrashing is. What is the negative effect that thrashing has? How do you avoid thrashing?
+
+Thrashing is when a computer becomes extremely slow or makes no progress on a program/process because it's memory or resources are overused. This can happen through excessive paging operations on a process and essentially get to a point where there are more page replacements than process executions. When a process is thrashing, it can take frames from other processes and lead to a waterfall of thrashing processes. This can be avoided by initially calculating, using a locality model, and allocating the process the required frames necessary. 
+
+
+Q7: Programming question: Write your own swapping offset calculator. Your program should accept the size of a page and the offset reference (input from command line is fine). Your program should return the page number and offset value for the input provided. Feel free to use the language of your choice. Please include all the source code you have written. (do NOT simply copy code off the internet). Tip: you can use this calculator your have written to verify your answers for Q2!
+
+psize = int(input("Insert a page size: "))
+offref = int(input("Insert your offset reference: "))
+
+pnum = int(offref/psize)
+
+offval = offref % psize
+
+print(f"Page number is {pnum} and offset value is {offval}")
+
+Q8: Programming Question: Write a second chance replacement algorithm. Create a circular linked list of a size between 20-30 ints. Randomly set all the values of this linked list to be 1 or 0, 0 representing a free page and 1 representing a page that is full. 
+Print out the list so the user knows what the values are. 
+Ask the user to select the next victim being that nth item in the linked list. If the victim has a value of 1, it is given a second chance (its value is changed to 0) and the next item in then checked, until a victim with the value 0 is found. If the victim has the value of 0 it is free, so “fill” it so that its value is now 1.
+Inform the user based on which victim they chose which pointer ended up being the victim. Allow the user to enter 3 victims so you can verify they contents of the linked list is being updated. Print the linked list prior to asking the user for the next victim. Please include all the source code you have written. (do NOT simply copy code off the internet).
+
+For example:
+
+In this example the user enters victim “2”, but because victim “2” has a value of 1, it is now set to 0 (given a second chance), then the next victim, victim “3” is checked. Because victim “3” has a value 1, it is now set to 0, and we move on to victim “4”. Because victim “4” has a value 0, it is free to use, so its value is now set to 1. 
+Hint: While I don’t want you to worry about the case where you never have 3 0’s available (that should be rare given the 20-30 entries), I do want you to consider the case where the last item in the list is selected by the user and it has a value of 1, so you circle around in the linked list back to the first value in the linked list.
+
+
