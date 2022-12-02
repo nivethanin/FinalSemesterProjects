@@ -1,6 +1,10 @@
 Assignment 4:
 Please complete the following questions. While you may use resources in the book and online, please explain in your own words, and do not simply copy and paste from the book, slides, or resources online. Please make sure to use your own words especially if it specifically says to do so. If you need to cite something, be sure to cite your source. Failure to cite sources will result in a 0 for the entire assignment. 
 Q1: Name and explain two differences between physical and logical addresses
+
+Logical address space is a generated address made by the CPU and can direct you to physical address space.
+Physical address is memory address that is in a physical location. Users cannot view the phyiscal address space and this address is directed by the memory management unit. 
+
 Q2: Assuming a 1-KB page size (recall 1 KB = 1024 B), what are the page numbers and offsets for the following address references (provided as decimal numbers):
 a. 3085
 b. 42095
@@ -15,17 +19,25 @@ d. Page number is 634 and offset value is 784
 e. Page number is 1953 and offset value is 129
 
 Q3: Are two entries allowed to point to the same page frame in memory? If they are what is the effect of this? Explain how this effect could be used to decrease the amount of time needed to copy a large amount of memory from one place to another. What effect would updating some byte on one page have on the other page?
+
+Two entries are allowed to point to the same page frame in memory. This will allow the two entries to share code and data. Well instead of copyuing large amounts of memory, you could hypothetically have two entries point to the same spot. ThUpdating some byte one one page can alter data needed for another page which can have problems or be exactly what you need. 
+
 Q4: Consider the following page reference string: 1, 2, 3, 4, 2, 1, 5, 6, 2, 1, 2, 3, 7, 6, 3, 2, 1, 2, 3, 6. 
 How many page faults would occur for the following replacement algorithms, assuming one, two, three, four, five, six, and seven frames?
  Remember that all frames are initially empty, so your first unique pages will cost one fault each. 
 • LRU replacement 
 • FIFO replacement
  • Optimal replacement
+
+ 1 Frame all would have 20 faults
+
 Q5:  Consider the following page reference string: 7, 2, 3, 1, 2, 5, 3, 4, 6, 7, 7, 1, 0, 5, 4, 6, 2, 3, 0 , 1. Assuming demand paging with four frames, how many page faults would occur for the following replacement algorithms? 
 • LRU replacement 
 • FIFO replacement
 • Optimal replacement
-
+LRU => 9
+ FIFO => 12
+ Optimal => 7
 
 Q6: Explain what thrashing is. What is the negative effect that thrashing has? How do you avoid thrashing?
 
@@ -53,4 +65,143 @@ For example:
 In this example the user enters victim “2”, but because victim “2” has a value of 1, it is now set to 0 (given a second chance), then the next victim, victim “3” is checked. Because victim “3” has a value 1, it is now set to 0, and we move on to victim “4”. Because victim “4” has a value 0, it is free to use, so its value is now set to 1. 
 Hint: While I don’t want you to worry about the case where you never have 3 0’s available (that should be rare given the 20-30 entries), I do want you to consider the case where the last item in the list is selected by the user and it has a value of 1, so you circle around in the linked list back to the first value in the linked list.
 
+Base implementation of circular limked list was taken from https://www.askpython.com/python/examples/circular-linked-lists
+That includes the node class and some basic functionality. Screenshot of output also submitted in separate file. 
 
+
+import random
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = self
+
+class CLL:
+    def __init__(self):
+        self.head = None
+        self.count = 0
+     
+    def __repr__(self):
+        string = ""
+          
+        if(self.head == None):
+            string += "Circular Linked List Empty"
+            return string
+          
+        string += f"Circular Linked List:\n{self.head.data}"      
+        temp = self.head.next
+        while(temp != self.head):
+            string += f" -> {temp.data}"
+            temp = temp.next
+        return string
+     
+    def append(self, data):
+        self.insert(data, self.count)
+        return
+     
+    def insert(self, data, index):
+        if (index > self.count) | (index < 0):
+            raise ValueError(f"Index out of range: {index}, size: {self.count}")
+             
+        if self.head == None:
+            self.head = Node(data)
+            self.count += 1
+            return
+         
+        temp = self.head
+        for _ in range(self.count - 1 if index - 1 == -1 else index - 1):
+            temp = temp.next
+             
+        aftertemp = temp.next #New node goes between temp and aftertemp
+        temp.next = Node(data)
+        temp.next.next = aftertemp
+        if(index == 0):
+            self.head = temp.next
+        self.count += 1
+        return
+     
+    def remove(self, index):
+        if (index >= self.count) | (index < 0):
+            raise ValueError(f"Index out of range: {index}, size: {self.count}")
+         
+        if self.count == 1:
+            self.head = None
+            self.count = 0
+            return
+         
+        before = self.head
+        for _ in range(self.count - 1 if index - 1 == -1 else index - 1):
+            before = before.next
+        after = before.next.next
+         
+        before.next = after
+        if(index == 0):
+            self.head = after
+        self.count -= 1
+        return
+     
+    def index(self, node: Node):
+        temp = self.head
+        for i in range(self.count):
+            if(temp == node):
+                return i
+            temp = temp.next
+        return print("Index Failure")
+     
+    def size(self):
+        return self.count
+     
+    def display(self):
+        print(self)
+
+    def pickVictim(self, index):
+        curr = self.head
+        i=0
+
+        while i != index:
+            curr = curr.next
+            i+=1
+        
+        self.handleVictim(curr, index)
+
+    def handleVictim(self, curr: Node, orig):
+        
+        #Orig is original chosen index to make sure we don't loop our traversal
+        if curr.data == 1:
+            if self.index(curr.next) != orig:
+                curr.data = 0
+                self.handleVictim(curr.next, orig)
+            else:
+                print("You've reached original point!!")
+                #It will warn you if you've reached original point
+        
+        elif curr.data == 0:
+            curr.data = 1
+            print(f'The location of the eventual victim was {self.index(curr)} and your chosen index was {orig}')
+            self.display()
+
+
+def main():
+    cll = CLL()
+    for _ in range(30):
+        cll.append(random.randint(0,1))
+    #Creates the circular linked list of 30 randomly placed 1s or 0s
+    
+    cll.display()
+    #Prints out the list for the user
+
+    cll.pickVictim(int(input("Pick your first victim: ")))
+
+    cll.pickVictim(int(input("Pick your second victim: ")))
+
+    cll.pickVictim(int(input("Pick your third victim: ")))
+    
+
+if __name__ == '__main__':
+    main()
+
+
+
+
+
+            
