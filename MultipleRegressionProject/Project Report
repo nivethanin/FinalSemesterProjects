@@ -1,5 +1,8 @@
 Introduction: 
-The NBA is one of the few sports with a variety of countable statistics which has lead to the rise of some of the most comprehensive advanced statistics in recent years. The implications of these stats are wide but more relavent than ever with the legalization of sports betting in Ontario. This study conducted a multiple linear regression analysis using several python frameworks to try and determine the more correlated advanced statistics to team wins per season. The data includes stats from 2003 - 2022 to maintain consistency of data as the game has evolved in terms quite a bit from before that. [Summarize findings]
+
 
 Background Information:
 
+The NBA is one of the few sports with a variety of countable statistics which has lead to the rise of some of the most comprehensive advanced statistics in recent years. The implications of these stats are wide but more relavent than ever with the legalization of sports betting in Ontario. This study conducted a multiple linear regression analysis using several python frameworks to try and determine the more correlated advanced statistics to team wins per season. The data includes stats from 2003 - 2022 to maintain consistency of data as there have been several changes to the league: the NBA added a team to the league in 2003, rule changes increased pace of play, the revolution of three points per game. 
+
+[Summarize findings]
