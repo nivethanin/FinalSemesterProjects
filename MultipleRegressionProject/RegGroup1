@@ -56,6 +56,9 @@ print(
 print(
   'mean_absolute_error : ', mean_absolute_error(y_test, predictions))
 
+finalPredict = model.predict([[0.346, 11.2, 30, 0.18, 0.523, 13.3, 0.195]])
+print("Prediction based on boston celtics", finalPredict)
+
 
 import statsmodels.api as ssm #for detail description of linear coefficients, intercepts, deviations, and many more
 

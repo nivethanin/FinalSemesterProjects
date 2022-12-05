@@ -34,7 +34,7 @@ print(df.head())
 # plt.show()
 
 
-X = df[['Age', 'MOV', 'TS%', 'eFG%', 'TOV%', 'ORB%', 'FT/FGA',
+X = df[['Age', 'TS%', 'TOV%', 'ORB%', 'FT/FGA',
   'D_eFG%', 'D_TOV%', 'D_RB%', 'D_FT/FGA']]
 y = df['W']
 print(X)
@@ -56,6 +56,8 @@ print(
 print(
   'mean_absolute_error : ', mean_absolute_error(y_test, predictions))
 
+finalPredict = model.predict([[24, 0.553, 11.2, 30, 0.18, 0.523, 13.3, 77.8, 0.195]])
+print("Prediction based on boston celtics", finalPredict)
 
 import statsmodels.api as ssm #for detail description of linear coefficients, intercepts, deviations, and many more
 
