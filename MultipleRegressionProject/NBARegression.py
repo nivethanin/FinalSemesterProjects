@@ -28,18 +28,19 @@ print(df.head())
 # print(df.head())
 # print(df.columns)
 
-# sns.scatterplot(x='X4 number of convenience stores',
-#                 y='Y house price of unit area', data=df)
-
-# plt.show()
-
 
 X = df[['Age', 'MOV', 'SOS', 'ORtg', 'DRtg', 'Pace',
  'FTr', '3PAr', 'TS%', 'eFG%', 'TOV%', 'ORB%', 'FT/FGA',
   'D_eFG%', 'D_TOV%', 'D_RB%', 'D_FT/FGA']]
 y = df['W']
-print(X)
-print(y)
+
+arrPar = ['Age', 'MOV', 'SOS', 'ORtg', 'DRtg', 'Pace',
+ 'FTr', '3PAr', 'TS%', 'eFG%', 'TOV%', 'ORB%', 'FT/FGA',
+  'D_eFG%', 'D_TOV%', 'D_RB%', 'D_FT/FGA']
+
+for i in arrPar:
+  sns.scatterplot(x=i, y='W', data=df)
+  plt.show()
 
 
 
@@ -52,10 +53,17 @@ model.fit(X_train,y_train)
 
 predictions = model.predict(X_test)
 
+finalPredict = model.predict([[27.5,7.5,-0.56,114.8,107.3,99.8,0.221,0.354,0.581,0.549,11.6,22.3,0.176,0.51,13,77.1,0.195,]])
+print(finalPredict)
+
 print(
   'mean_squared_error : ', mean_squared_error(y_test, predictions))
 print(
   'mean_absolute_error : ', mean_absolute_error(y_test, predictions))
+
+# print(
+#   'Estimated number of wins for Charlotte this year: ', model.predict()
+# )
 
 
 import statsmodels.api as ssm #for detail description of linear coefficients, intercepts, deviations, and many more
