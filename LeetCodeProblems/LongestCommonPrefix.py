@@ -1,15 +1,29 @@
-inp = ["flower", 'florist', 'flock']
+inp = ["flower", 'florist', 'flock', 'flour']
 
-def longestCommonPrefix( strs):
+def longestCommonPrefix(strs):
         if not strs:
-            return ""
+            return "n"
             
         for i, letter_group in enumerate(zip(*strs)):
-            print(f" {i} and letter group is {letter_group}")
             if len(set(letter_group)) > 1:
+                #The set function will remove duplicates
+                #If a set has more than one item in it, 
                 return strs[0][:i]
+                
         else:
             return min(strs)
 
 
-longestCommonPrefix(inp)
+
+
+def LCP(inp:list):
+    prefix =[]
+    for i in inp:
+        j=[]
+        j.append([*i])
+
+       
+       
+
+
+print(LCP(inp))
