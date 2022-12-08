@@ -15,15 +15,17 @@ def longestCommonPrefix(strs):
 
 
 
-
 def LCP(inp:list):
     prefix =[]
     for i in inp:
         j=[]
         j.append([*i])
+        for k in range(len(j)-1):
+            if prefix is None:
+                prefix = j
+            if not prefix[k] or prefix[k]:
+                prefix[k]
 
-       
-       
 
 
 print(LCP(inp))
