@@ -1,4 +1,6 @@
 class Solution:
+    """ The rules of this problem have changed """
+
     DIC = {
         "}":"{" ,
         "]":"[" ,
@@ -13,7 +15,8 @@ class Solution:
             
             if len(stack)>0: 
                 if fs[i] in self.DIC.keys():
-                    if stack.pop() == self.DIC[fs[i]]:
+                    if stack[len(stack)] == self.DIC[fs[i]]:
+                        stack.pop()
                         continue
                     else:
                         return False
@@ -22,16 +25,17 @@ class Solution:
                     stack.append(fs[i])
             
             else: 
-                if i in self.DIC.keys() and stack.pop() != self.DIC[i]:
+                print("i'm here")
+                print(stack[len(stack)])
+                if i in self.DIC.keys() and stack[len(stack)] != self.DIC[i]:
                     return False
 
-
-        if len(stack)!=0:
+        if len(stack)>0:
             return False
-        
+
         return True
-        
-g = "([)]"
+
+g = "(]"
 r = Solution()
 print(r.isValid(g))
 
