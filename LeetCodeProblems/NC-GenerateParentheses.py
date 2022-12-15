@@ -1,4 +1,5 @@
 class Solution:
+    """Not Complete"""
     def isValid(self, s: str):
 
         ss = [*s]
