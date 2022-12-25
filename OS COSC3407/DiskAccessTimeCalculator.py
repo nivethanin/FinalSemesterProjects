@@ -36,6 +36,7 @@ def SSTF(reqQueue, head):
             if finQueue[i+1]:
                 totDis = totDis + abs(finQueue[i] - finQueue[i+1])
         print("SSTF:  ", totDis)
+        print("SSTF =, ", finQueue)
                     
 def findMin(diff):
     ''' Helper function for SSTF search algorithm '''
@@ -80,12 +81,16 @@ def scan(queue, start, numCyl):
 
 if __name__ == '__main__':
 
-    numCyl = int(input("Input the number of cylinders: "))
-    start = int(input("Input the starting position: "))
+    # numCyl = int(input("Input the number of cylinders: "))
+    # start = int(input("Input the starting position: "))
 
-    reqQueue = input("Input numbers as part of an array with spaces in between: ")
-    reqQueue = reqQueue.split(' ')
-    reqQueue = [eval(i) for i in reqQueue]
+    # reqQueue = input("Input numbers as part of an array with spaces in between: ")
+    # reqQueue = reqQueue.split(' ')
+    # reqQueue = [eval(i) for i in reqQueue]
+
+    reqQueue = [98, 183, 37, 122, 14, 224, 65, 267]
+    numCyl = 300
+    start = 53
 
 
     FCFS(numCyl, start, reqQueue)
