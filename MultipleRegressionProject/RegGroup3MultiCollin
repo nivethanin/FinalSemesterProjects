@@ -21,8 +21,8 @@ from sklearn.svm import SVC
 from sklearn.feature_selection import f_regression
 
 
-df = pd.read_csv("MultipleRegressionProject\BallTeamStats.csv")
-df.drop( 'Rk' , inplace = True,axis=1)
+df = pd.read_csv('MultipleRegressionProject/BallTeamStats.csv')
+# df.drop( 'Rk' , inplace = True,axis=1)
 print(df.head())
 
 # print(df.head())
