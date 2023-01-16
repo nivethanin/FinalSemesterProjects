@@ -18,20 +18,23 @@ class Solution:
             if len(stack)<1 or fs[i] not in self.DIC:
                 stack.append(fs[i])
 
-            elif fs[i] in self.DIC and stack[len(stack)-1] == fs[i]:
+            elif fs[i] in self.DIC and stack[len(stack)-1] == self.DIC[fs[i]]:
                 stack.pop()
             
             else:
                 return False
 
         
-        if stack
+        if len(stack)>0:
+            return False
+        
+        return True
 
             
         
             
 
-g = "(]"
+g = "([])()[]"
 r = Solution()
 print(r.isValid(g))
 
