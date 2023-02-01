@@ -1,4 +1,6 @@
 class MyQueue {
+    
+    public static void main(String[] args) {
     int arr[];
     int fir;
     int las;
@@ -31,7 +33,6 @@ class MyQueue {
         
     }
     
-    public static void main(String[] args) {
     Main myObj1 = new MyQueue();
     
     myObj1.push(3);
